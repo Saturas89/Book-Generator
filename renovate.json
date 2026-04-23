@@ -1,0 +1,50 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Europe/Berlin",
+  "schedule": ["every monday"],
+  "prHourlyLimit": 3,
+  "prConcurrentLimit": 6,
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Renovate – Dependency Dashboard",
+  "labels": ["dependencies"],
+  "commitMessagePrefix": "chore(deps):",
+  "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "description": "Playwright – von der CI-Matrix genutzt; manuelle Review bei Major-Bumps",
+      "matchPackageNames": ["@playwright/test", "playwright"],
+      "groupName": "Playwright",
+      "automerge": false
+    },
+    {
+      "description": "Vitest + Testing Library – gemeinsam aktualisieren",
+      "matchPackageNames": [
+        "vitest",
+        "@testing-library/dom",
+        "@testing-library/react",
+        "jsdom"
+      ],
+      "groupName": "Testing",
+      "automerge": false
+    },
+    {
+      "description": "TypeScript – manuelle Review bei Major-Bumps",
+      "matchPackageNames": ["typescript"],
+      "automerge": false
+    },
+    {
+      "description": "Patch und Minor Bumps auf devDependencies automerge",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Major-Updates niemals automerge",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ]
+}
